@@ -13,8 +13,11 @@ module comin
    real(kind=d2p) :: XOI       ! initialization frequency (real part)
    real(kind=d2p) :: XC        ! XC  - gyrofrequency (kHZ)
    real(kind=d2p) :: PZL       ! option L, =0 linear input, =1 logarythmic input of P and Z
+   real(kind=d2p) :: BETA      ! beta of the first species, ratio of thermal velocity to gyrofrequency
+   real(kind=d2p) :: mi_o_me   ! mass ratio between ions and electrons typically set to 1836.1
 
    logical        :: printDebugInfo = .false.
+   character(len=100) :: output_filename = 'whamp_output.txt'  ! Default output filename
 
    integer        :: cycleZFirst   ! which direction vary first (KFS in WHAMP) ?? how to handle
 
