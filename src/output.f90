@@ -3,6 +3,7 @@ SUBROUTINE OUTPT
    use comcout
    implicit none
    integer, parameter :: d2p = kind(1.0d0)
+   integer :: species_index  ! Add this declaration
    integer, parameter :: output_file_unit = 20  ! Add file unit
    real(kind=d2p), parameter :: PI = 3.14159265358979_d2p
 
@@ -58,6 +59,20 @@ SUBROUTINE OUTPT
                RETURN
             END IF
             IC = IOU(K:K)
+            ! Check for species index specification (e.g., a(2))
+            species_index = 1  ! Default to first species
+            if (K < KMX .and. IOU(K+1:K+1) == '(') then
+               ! Parse species index
+               if (K+2 <= KMX) then
+                  read(IOU(K+2:K+2), '(I1)', iostat=IOS) species_index
+                  if (IOS == 0 .and. K+3 <= KMX .and. IOU(K+3:K+3) == ')') then
+                     K = K + 3  ! Skip the (n) part
+                  else
+                     species_index = 1  ! Default if parsing fails
+                  end if
+               end if
+            end if
+
             IF (IC .EQ. '/') THEN
                PRINT 6
                WRITE (output_file_unit, 6)  ! Also write newline to file
@@ -126,20 +141,29 @@ SUBROUTINE OUTPT
                   ! WRITE (output_file_unit, '()')    ! Force newline after E field
       17          FORMAT(' EX=', F7.4, F8.4, '  EY=', F7.4, F8.4,&
                         & '  EZ=', F7.4, F8.4, ' ', $)
+               
                case ('A', 'a') ! A - T_perp/T_par ratio
-                  WRITE (*, 801) AA(1, 1)  ! Output first species A parameter
-                  WRITE (output_file_unit, 801) AA(1, 1)  ! Also write to file
-                  ! if (K == KMX) WRITE (output_file_unit, '()')  ! Newline if last
-      801         FORMAT(' A=', F7.4, ' ', $)
+                  if (species_index >= 1 .and. species_index <= 10) then
+                     WRITE (*, 801) AA(species_index, 1)  ! Output first species A parameter
+                     WRITE (output_file_unit, 801) AA(species_index, 1)  ! Also write to file
+                     ! if (K == KMX) WRITE (output_file_unit, '()')  ! Newline if last
+         801         FORMAT(' A=', F7.4, ' ', $)
+                  else
+                     WRITE (*, *) 'Invalid species index for A: ', species_index
+                  end if
                case ('w') ! BETA - thermal velocity to gyrofrequency ratio
                   WRITE (*, 811) BETA
                   WRITE (output_file_unit, 811) BETA  ! Also write to file
       811         FORMAT(' BETA=', E9.3, ' ', $)
                case ('B', 'b') !B
-                  WRITE (*, 19) BFL
-                  WRITE (output_file_unit, 19) BFL  ! Also write to file
-      19          FORMAT(' BX=', 1PE10.2, 1PE10.2, '  BY=', 1PE10.2, 1PE10.2,&
-                        & '  BZ=', 1PE10.2, 1PE10.2, ' ', $)
+                  if (species_index >= 1 .and. species_index <= 10) then
+                     WRITE (*, 19) BFL
+                     WRITE (output_file_unit, 19) BFL  ! Also write to file
+         19          FORMAT(' BX=', 1PE10.2, 1PE10.2, '  BY=', 1PE10.2, 1PE10.2,&
+                           & '  BZ=', 1PE10.2, 1PE10.2, ' ', $)
+                  else
+                     WRITE (*, *) 'Invalid species index for B: ', species_index
+                  end if
                case ('G', 'g') ! G
                   WRITE (*, 21) VG
                   WRITE (output_file_unit, 21) VG  ! Also write to file
