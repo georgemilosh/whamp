@@ -125,7 +125,7 @@ PROGRAM WHAMP
       
       !
       RN = REN(1) ! mass of the first species particle normalized to m_e
-      REDN = DN(1)/RN ! density of the first species times m_e/m_s
+      REDN = DN(1)/RN ! density of the first species times m_e/m_1
       !                  ****  NORMALIZED TEMPERATURES AND VELOCITIES.  ****
       DO J = 1, JMA
          REN(J) = REN(J)/RN ! normalize mass of the particle to the first species particle
