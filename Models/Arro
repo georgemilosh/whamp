@@ -1,0 +1,21 @@
+# Model from F(1) Arrò, G.; Califano, F.; Lapenta, G. Spectral Properties and Energy Transfer at Kinetic Scales in Collisionless Plasma Turbulence. A&A 2022, 668, A33. https://doi.org/10.1051/0004-6361/202243352.
+# Density values (m^-3) for 10 species
+1.0e6 1.0e6 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+# Temperature values (keV) for 10 species  
+0.026  0.104 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+# Loss cone parameter D for 10 species
+1.   1.   1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 
+# Temperature anisotropy A for 10 species
+2.0  1.0   1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 
+# Loss cone parameter B for 10 species
+0.0  0.0  0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+# Atomic mass for 10 species (0=electron, 1=proton, etc.)
+0.0  1.0  0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+# Drift velocity for 10 species
+0.   .0  0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+# electron Gyrofrequency (kHz)
+0.064043
+# PZL parameter
+0
+# Ion to electron mass ratio
+100
